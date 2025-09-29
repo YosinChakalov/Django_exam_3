@@ -25,6 +25,11 @@ class ProjectSerializer(serializers.ModelSerializer):
         if exists.exists():
             raise serializers.ValidationError("Project title must be unique for this owner.")
         return value
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['status'] = "Выполнено"
+        return representation
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -50,3 +55,8 @@ class TaskSerializer(serializers.ModelSerializer):
         if value not in [1, 2, 3, 4, 5]:
             raise serializers.ValidationError("Priority must be between 1 and 5.")
         return value
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['status'] = "Выполнено"
+        return representation
